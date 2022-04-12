@@ -22,23 +22,28 @@ data = []
 
 #Used Procedures
 
-def loadingRaise():
-  #when button is clicked raise the loading screen forward
-  raiseAll(loadingScreen, "nothing")
-  
-#save entered name 
-def saveName():
-  global newName
-  newName = entUsername.get()
-  data.append(newName)
-
 #raise frame functions
 
 #raise the loading window and save the name, a functions calling 2 functions so it works with tk
+
+#
 def saveAndRaise():
-  saveName()
-  loadingRaise()
-  
+  saveInfo()
+  raiseAll(questionsWindow, "nothing")
+
+def saveInfo():
+  #appending saved data
+  global data
+  userName = entNameQuestion.get()
+  data.append(userName)
+  userDOB = entDOBQuestion.get()
+  data.append(userDOB)
+  userAge = entAgeQuestion.get()
+  data.append(userAge)
+  userLoc = entLocQuestion.get()
+  data.append(userLoc)
+  userRea = entReaQuestion.get()
+  data.append(userRea)
 #raise the quetions window to collect needed information
 def qRaise():
   raiseAll(questionsWindow, "nothing")
@@ -151,27 +156,20 @@ def raiseAll(raisingFrame, frameRaisingFrameInFront):
     
 #temporary text, polish
 def tempTextW(x):
-  entWeightQuestion.delete(0, "end")
-def tempTextH(x):
-  entHeightQuestion.delete(0, "end")
+  entNameQuestion.delete(0, "end")
+def tempTextDOB(x):
+  entDOBQuestion.delete(0, "end")
 def tempTextA(x):
   entAgeQuestion.delete(0, "end")
-def tempTextN(x):
-  entUsername.delete(0, "end")
+def tempTextL(x):
+  entLocQuestion.delete(0, "end")
+def tempTextR(x):
+  entReaQuestion.delete(0, "end")
 #put multiple procedures into one procedure so it works
 def calculateAndRaise():
   collectData()
   BMI()
   bmiRaise()
-#collect data into a list for future
-def collectData():
-  global weight, height, age
-  weight = float(entWeightQuestion.get())
-  data.append(weight)
-  height = float(entHeightQuestion.get())
-  data.append(height)
-  age = int(entAgeQuestion.get())
-  data.append(age)
 
 #go back to the main menu from other menus 
 def goBack():
@@ -243,83 +241,104 @@ def showInfo():
   print("")
   #https://www.who.int/news-room/fact-sheets/detail/healthy-diet
   print(info[1])
-
+def questionsRaise():
+  raiseAll(questionsWindow, "nothing")
     
 # main window
 root = tk.Tk()
-root.wm_geometry("1440x2960")
-root.winfo_toplevel().title("Daily exercises, prayers, and meditations")
+root.wm_geometry("2960x1440")
+root.winfo_toplevel().title("BlueDoor")
 menuWindow = tk.Frame(root)
 menuWindow.grid(row = 0, column = 0, stick = 'news')
 
+
 #title screen
-username = tk.Label(menuWindow, text='Enter Your name!', font = "Courier")
-username.pack()
-#enter username 
-entUsername = tk.Entry(menuWindow, bd=3)
-entUsername.insert(0, "Name Here")
-entUsername.pack(pady=5)
-entUsername.bind("<FocusIn>", tempTextN)
+
+#attaching an image to a variable to be used in the code
+#image found at https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/frbuilding_home_door_blue-image-kybe55fs.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=4ef43764da9bcf7b22f6f4e1c1bda729
+door = (Image.open("pictures/KeeshasDoor.png"))
+resizeDoor = door.resize((225, 377))
+
+door = ImageTk.PhotoImage(resizeDoor)
+
+#display the image using a label
+showImg = tk.Label(menuWindow, image = door)
+showImg.grid(row = 2, column =5)
+
+
 #enter button
-enterB = tk.Button(menuWindow, text='ENTER', command = saveAndRaise)
-enterB.pack(padx = 175, pady = 20)
+enterB = tk.Button(menuWindow, text='Search', command = questionsRaise)
+enterB.grid(row = 3, column = 5)
 
 
 #ask for important info that will be used later in the program
 questionsWindow = tk.Frame(root)
 questionsWindow.grid(row = 0, column = 0, stick = 'news')
 
-'''
-0 = name
-1 = dob
-2 = age
-3 = location(city)
-4 = current resources
-'''
 
-#Ask user their name echeck
-weightQuestion = tk.Label(questionsWindow, text = "Enter your name")
-weightQuestion.pack()
-entWeightQuestion = tk.Entry(questionsWindow, bd = 3)
-entWeightQuestion.insert(0, ""Enter - (First Name, Last Name)"ter 'blank'")
-entWeightQuestion.pack()
-entWeightQuestion.bind("<FocusIn>", tempTextW)
+#Ask user their name
+nameQuestion = tk.Label(questionsWindow, text = "Enter your name")
+nameQuestion.pack()
+entNameQuestion = tk.Entry(questionsWindow, bd = 3)
+entNameQuestion.insert(0, "Enter - (First Name, Last Name")
+entNameQuestion.pack()
+entNameQuestion.bind("<FocusIn>", tempTextW)
 
-#Ask user their height
-#Enter in your Date of Birth!(dob) efin
+
+#Enter in your Date of Birth!(dob) efin 1
 dobQuestion = tk.Label(questionsWindow, text = "Enter your date of birth below")
 dobQuestion.pack()
-entdobQuestion = tk.Entry(questionsWindow, bd = 3)
-entdobQuestion.insert(0, "Enter in 00/00/0000 format")
-entdobQuestion.pack()
-entdobQuestion.bind("<FocusIn>", tempTextH)
+entDOBQuestion = tk.Entry(questionsWindow, bd = 3)
+entDOBQuestion.insert(0, "Enter in 00/00/0000 format")
+entDOBQuestion.pack()
+entDOBQuestion.bind("<FocusIn>", tempTextDOB)
 
-#Ask user their age
+#Ask user their age efin 2
 ageQuestion = tk.Label(questionsWindow, text = "Enter your age below")
 ageQuestion.pack()
 entAgeQuestion = tk.Entry(questionsWindow, bd = 3)
-entAgeQuestion.insert(0, "Enter Age")
+entAgeQuestion.insert(0, "Enter current age")
 entAgeQuestion.pack()
 entAgeQuestion.bind("<FocusIn>", tempTextA)
 
-#calculate the given data
-calculate = tk.Button(questionsWindow, text = 'calculate!', command = calculateAndRaise)
-calculate.pack()
+#Ask the user their location efin 3
+locQuestion = tk.Label(questionsWindow, text = "Enter your location")
+locQuestion.pack()
+entLocQuestion = tk.Entry(questionsWindow, bd = 3)
+entLocQuestion.insert(0, "Enter your street address")
+entLocQuestion.pack()
+entLocQuestion.bind("<FocusIn>", tempTextL)
 
+#Ask the user their current reasources efin 4
+reaQuestion = tk.Label(questionsWindow, text = "Enter your current reasources")
+reaQuestion.pack()
+entReaQuestion = tk.Entry(questionsWindow, bd = 3)
+entReaQuestion.insert(0, "Enter your current reasources")
+entReaQuestion.pack()
+entReaQuestion.bind("<FocusIn>", tempTextR)
 
-#after calculations are completed go to the main menu that will be the rest of the program
-bmiMenu = tk.Frame(root)
-bmiMenu.grid(row = 0, column = 0, stick = 'news')
+#save all enteredsaveNameo
+save = tk.Button(questionsWindow, text = 'Next', command = saveAndRaise)
+save.pack()
+
+'''
+#Go to main app
+mainApp = tk.Frame(root)
+mainApp.grid(row = 0, column = 0, stick = 'news')
 
 #give user the choice to see their BMI
-response = tk.Label(bmiMenu, text = "Would you like to see your BMI? Click 'BMI' to see!")
-response.grid(row = 1, column = 3)
+post = tk.Button(mainApp, text = "Post")
+post.grid(row = 1, column = 5)
+
 
 #when the user clicks to see their BMI it will show up
-btnBMI = tk.Button(bmiMenu, text = "BMI", command = collectBMI)
-btnBMI.grid(row = 2, column = 3)
+find = tk.Button(mainApp, text = "Find")
+find.grid(row = 1, column = 6)
 
 
+########################################
+#Left off on making the main app
+######################################
 #give user options on their weight management
 weightchoose = tk.Label(bmiMenu, text = "vvv |Choose your weight management| vvv", font = "Arial")
 weightchoose.grid(row = 3, column = 3)
@@ -342,9 +361,13 @@ btnCut.grid(row = 5, column = 4)
 explCut = tk.Label(bmiMenu, text = "Cutting is losing weight")
 explCut.grid(row = 6, column = 4)
 
-#add discloser option
+
+#Show user their information
 discloserMessage = tk.Button(bmiMenu, text = "Discloser", command = disclosure)
 discloserMessage.grid(row = 10, column = 3)
+
+#give user option to change their information
+
 
 
 
@@ -534,11 +557,10 @@ dietCut.grid(row = 0, column = 0, sticky = 'news')
 returnMain = tk.Button(dietCut, text = "X", command = goBack)
 returnMain.grid(row = 1, column = 1)
 
-
+'''
 
 #raising frames so it renders right
-raiseAll(bmiMenu, "nothing")
-raiseAll(questionsWindow, bmiMenu)
-raiseAll(loadingScreen, questionsWindow)
-raiseAll(menuWindow, loadingScreen)
+
+raiseAll(menuWindow, questionsWindow)
+
 root.mainloop()
