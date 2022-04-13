@@ -29,7 +29,7 @@ data = []
 #
 def saveAndRaise():
   saveInfo()
-  raiseAll(questionsWindow, "nothing")
+  raiseAll(chooseCounty, "nothing")
 
 def saveInfo():
   #appending saved data
@@ -317,9 +317,28 @@ entReaQuestion.insert(0, "Enter your current reasources")
 entReaQuestion.pack()
 entReaQuestion.bind("<FocusIn>", tempTextR)
 
-#save all enteredsaveNameo
+#save all entered things
 save = tk.Button(questionsWindow, text = 'Next', command = saveAndRaise)
 save.pack()
+
+
+
+
+
+
+chooseCounty = tk.Frame(root)
+chooseCounty.grid(row = 0, column = 0, stick = 'news')
+
+optionCountry = ["United States"]
+optionState = ["Indiana"]
+optionCounty = ["Allen"]
+
+test = StringVar(chooseCounty)
+test.set(optionCountry)
+dropDownCountry = tk.OptionMenu(chooseCounty, test, "United States")
+dropDownCountry.pack
+
+
 
 '''
 #Go to main app
@@ -558,9 +577,11 @@ returnMain = tk.Button(dietCut, text = "X", command = goBack)
 returnMain.grid(row = 1, column = 1)
 
 '''
+'''
+
 
 #raising frames so it renders right
 
-raiseAll(menuWindow, questionsWindow)
-
+raiseAll(menuWindow, "nothing")
+'''
 root.mainloop()
