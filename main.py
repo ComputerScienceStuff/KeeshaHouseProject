@@ -243,7 +243,8 @@ def showInfo():
   print(info[1])
 def questionsRaise():
   raiseAll(questionsWindow, "nothing")
-    
+def raiseMain():
+  raiseAll(mainApp, "nothing")
 # main window
 root = tk.Tk()
 root.wm_geometry("2960x1440")
@@ -322,25 +323,36 @@ save = tk.Button(questionsWindow, text = 'Next', command = saveAndRaise)
 save.pack()
 
 
-
+#choosing where person lives
 
 
 
 chooseCounty = tk.Frame(root)
 chooseCounty.grid(row = 0, column = 0, stick = 'news')
 
-optionCountry = ["United States"]
-optionState = ["Indiana"]
-optionCounty = ["Allen"]
-
-choice = tk.StringVar()
-choice.set(optionCountry[0])
-dropDownCountry = tk.OptionMenu(chooseCounty, choice, "United States")
-dropDownCountry.pack()
+chooseSomething = tk.Label(chooseCounty, text = "Choose your location, this will be used to find potential helpful resources")
 
 
+choiceCountry = tk.StringVar()
+choiceCountry.set("United States")
+dropDownCountry = tk.OptionMenu(chooseCounty, choiceCountry, "Canada", "United States", "Mexico")
+dropDownCountry.grid(row = 1, column = 2)
 
-'''
+
+
+choiceState = tk.StringVar()
+choiceState.set("Indiana")
+dropDownState = tk.OptionMenu(chooseCounty, choiceState, "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming")
+dropDownState.grid(row = 2, column = 2)
+
+choiceCounty = tk.StringVar()
+choiceCounty.set("Allen")
+dropDownCounty = tk.OptionMenu(chooseCounty, choiceCounty, "Adams","Allen","Barthoomew","Benton","Blackford","Boone","Brown","Carroll","Cass","Clark","Clay","Clinton","Crawford","Daviess","De Kalb","Dearborn","Decatur","Delaware","Dubois","Elkhart","Fayette","Floyd","Fountain","Franklin","Fulton","Gibson","Grant","Greene","Hamilton","Hancock","Harrison","Hendricks","Henry","Howard","Huntington","Jackson","Jasper","Jay","Jefferson","Jennings","Johnson","Knox","Koscuisko","Lagrange","Lake","LaPorte","Lawrence","Madison","Marion","Marshall","Martin","Miami","Monroe","Montgomery","Morgan","Newton","Noble","Ohio","Orange","Owen","Parke","Perry","Pike","Porter","Posey","Pulaski","Putnam","Randolph","Ripley","Rush","Saint Joseph","Scott","Shelby","Spencer","Starke","Steuben","Sullivan","Switzerland","Tippeconoe","Tipton","Union","Vanderburgh","Vermillion","Vigo","Wabash","Warren","Warrick","Washington","Wayne","Wells","White","Whitley")
+dropDownCounty.grid(row = 3, column = 2)
+
+enterLoc = tk.Button(chooseCounty, text = "Confirm", command = raiseMain)
+enterLoc.grid(row = 4, column = 2)
+
 #Go to main app
 mainApp = tk.Frame(root)
 mainApp.grid(row = 0, column = 0, stick = 'news')
@@ -355,6 +367,7 @@ find = tk.Button(mainApp, text = "Find")
 find.grid(row = 1, column = 6)
 
 
+'''
 ########################################
 #Left off on making the main app
 ######################################
@@ -577,11 +590,11 @@ returnMain = tk.Button(dietCut, text = "X", command = goBack)
 returnMain.grid(row = 1, column = 1)
 
 '''
-'''
+
 
 
 #raising frames so it renders right
 
 raiseAll(menuWindow, "nothing")
-'''
+
 root.mainloop()
