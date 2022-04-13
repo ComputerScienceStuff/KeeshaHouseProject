@@ -333,10 +333,9 @@ optionCountry = ["United States"]
 optionState = ["Indiana"]
 optionCounty = ["Allen"]
 
-test = StringVar(chooseCounty)
-test.set(optionCountry)
+test = ""
 dropDownCountry = tk.OptionMenu(chooseCounty, test, "United States")
-dropDownCountry.pack
+dropDownCountry.pack()
 
 
 
