@@ -165,86 +165,20 @@ def tempTextL(x):
   entLocQuestion.delete(0, "end")
 def tempTextR(x):
   entReaQuestion.delete(0, "end")
-#put multiple procedures into one procedure so it works
-def calculateAndRaise():
-  collectData()
-  BMI()
-  bmiRaise()
 
-#go back to the main menu from other menus 
-def goBack():
-  raiseAll(mainMenu, "nothing")
-
-def exersizeRaise():
-  global data
-  
-  if data[5] == "Bulk":
-    raiseAll(exersizeBulk, "nothing")
-  elif data[5] == "Maintain":
-    raiseAll(exersizeMaintain, "nothing")
-  else:
-    raiseAll(exersizeCut, "nothing")
-
-def dietRaise():
-  global data
-
-  if data[5] == "Bulk":
-    raiseAll(dietBulk, "nothing")
-  elif data[5] == "Maintain":
-    raiseAll(dietMaintain, "nothing")
-  else:
-    raiseAll(dietCut, "nothing")
-#give user a disclosure on BMI
-#information from
-#https://www.diabetes.ca/managing-my-diabetes/tools---resources/body-mass-index-(bmi)-calculator#:~:text=Body%20Mass%20Index%20is%20a,range%20is%2018.5%20to%2024.9.
-def disclosure():
-  print("*BMI is not used for muscle builders, long distance athletes, pregnant women, the elderly or young children.")
-  print("")
-  print("Further Information:")
-  print("A BMI of 25.0 or more is overweight, while the healthy range is 18.5 to 24.9. BMI applies to most adults 18-65 years.")
-  print("")
-  
-  
-#Used a procedure because tk wont work with just variables or code. 
-def collectBMI():
-  print(data[4])
-  bmiMenu.tkraise()
-  
-#calulate BMI
-def BMI():
-  global data
-  BMI = data[1]/(data[2]*data[2])
-
-  #append data to a list so it can be used further on in the program
-  data.append(round(BMI, 2))
-
-#depending on what the user chose add that to data
-def choseCut():
-  global data, management
-  management = "Cut"
-  
-  data.append("Cut")
-  raiseAll(mainMenu, "nothing")
-def choseBulk():
-  global data, management
-  management = "Bulk"
-  data.append("Bulk")
-  raiseAll(mainMenu, "nothing")
-def choseMaintain():
-  global data, management
-  management = "Maintain"
-  data.append("Maintain")
-  raiseAll(mainMenu, "nothing")
-def showInfo():
-  #https://www.calculator.net/calorie-calculator.html
-  print(info[0])
-  print("")
-  #https://www.who.int/news-room/fact-sheets/detail/healthy-diet
-  print(info[1])
+#raising functions
 def questionsRaise():
   raiseAll(questionsWindow, "nothing")
 def raiseMain():
   raiseAll(mainApp, "nothing")
+def goPosting():
+  raiseAll(postingFrame, "nothing")
+#go back to main app
+def goBack():
+  raiseAll(mainApp, "nothing")
+
+def goFind():
+  raiseAll(findingFrame, "nothing")
 # main window
 root = tk.Tk()
 root.wm_geometry("2960x1440")
@@ -358,13 +292,32 @@ mainApp = tk.Frame(root)
 mainApp.grid(row = 0, column = 0, stick = 'news')
 
 #give user the choice to see their BMI
-post = tk.Button(mainApp, text = "Post")
+post = tk.Button(mainApp, text = "Post", command = goPosting)
 post.grid(row = 1, column = 5)
+
+  
+postingFrame = tk.Frame(root)
+postingFrame.grid(row = 0, column = 0, stick = 'news')
+
+#x button so user can go back
+xButton = tk.Button(postingFrame, text = "x", command = goBack)
+xButton.grid(row = 1, column = 1)
 
 
 #when the user clicks to see their BMI it will show up
-find = tk.Button(mainApp, text = "Find")
+find = tk.Button(mainApp, text = "Find", command = goFind)
 find.grid(row = 1, column = 6)
+
+findingFrame = tk.Frame(root)
+findingFrame.grid(row = 0, column = 0, stick = 'news')
+
+#x button so user can go back
+xButton = tk.Button(findingFrame, text = "x", command = goBack)
+xButton.grid(row = 1, column = 1)
+
+
+#show user thier information 
+#ethan will cover this
 
 
 '''
