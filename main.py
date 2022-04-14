@@ -330,16 +330,14 @@ mainApp.grid(row = 0, column = 0, stick = 'news')
 
 #empty labels to push post and find over
 #row 1, column < 5
-KillMartin = tk.Label(mainApp, text = "                ")
+KillMartin = tk.Label(mainApp, text = "            ")
 KillMartin.grid(row = 1, column = 1)
 KidnapFamily = tk.Label(mainApp, text = "                  ")
 KidnapFamily.grid(row = 1, column = 2)
 BuyVan = tk.Label(mainApp, text = "                       ")
 BuyVan.grid(row = 1, column = 3)
-RunVanOffHighway = tk.Label(mainApp, text = "                              ")
+RunVanOffHighway = tk.Label(mainApp, text = "                                       ")
 RunVanOffHighway.grid(row = 1, column = 4)
-LightVanOnFire = tk.Label(mainApp, text = "                                     ")
-LightVanOnFire.grid(row = 1, column = 5)
 
 
 #give user the choice to see their BMI
