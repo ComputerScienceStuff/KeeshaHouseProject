@@ -11,7 +11,13 @@ from PIL import ImageTk, Image
 
 
 #data storage
-data = []
+posts = [0, 1, 2]
+'''
+0 = Type
+1 = Location
+2 = Expiration
+'''
+data = [0, 1, 2, 3, 4]
 '''
 0 = name
 1 = dob
@@ -31,48 +37,101 @@ def saveAndRaise():
   saveInfo()
   raiseAll(chooseCounty, "nothing")
 
+
+
+def postNew():
+  #get all info inputted and add it to a list to save
+  type = entTypeResource.get()
+  data[:0] + [type] + data[0 + 1:]
+  location = entLocResource.get()
+  data[:1] + [location] + data[1+ 1:]
+  expiration = entExResource.get()
+  data[:2] + [expiration] + data[2 + 1:]
+  
 def saveInfo():
   #appending saved data
   global data
   userName = entNameQuestion.get()
-  data.append(userName)
+  data[:0] + [userName] + data[0 + 1:]
   userDOB = entDOBQuestion.get()
-  data.append(userDOB)
-  userAge = entAgeQuestion.get()
-  data.append(userAge)
-  userLoc = entLocQuestion.get()
-  data.append(userLoc)
+  data[:1] + [userDOB] + data[1 + 1:]
   userRea = entReaQuestion.get()
-  data.append(userRea)
+  data[:2] + [userRea] + data[2 + 1:]
+
+  '''
+  def giveInfo():
+  global data
+  print("Name: ", data[0])
+  print("Weight: ", data[1])
+  print("Height: ", data[2])
+  print("Age: ", data[3])
+  print("Management: ", data[5])
+  print("")
+  change = input("Would you like to change anything? (y/n) ")
+
+  if change == "y":
+    print("You can change the following: ")
+    print("Name, Weight, Height, Age, Management ")
+    toChange = input("What are we changing? ")
+    if toChange == "Name":
+      changeName = input("What would you like to change it to? ")
+      areYouSure = input("Are you sure? (y/n) ")
+      if areYouSure == "n":
+        giveInfo()
+      else:
+        #replace name to new name using slicing
+        data = data[:0] + [changeName] + data[0+1:]
+
+    elif toChange == "Weight":
+      changeWeight = float(input("What is your current weight now? "))
+      areYouSure = input("Are you sure? (y/n) ")
+      if areYouSure == "n":
+        giveInfo()
+      else:
+        #replace weight to updated weight using slicing
+        data = data[:1] + [changeWeight] + data[1 + 1:]
+    elif toChange == "Height":
+      changeHeight = float(input("What is your current height? "))
+      areYouSure = input("Are you sure? (y/n) ")
+      if areYouSure == "n":
+        giveInfo()
+      else:
+        #replace height to updated height using slicing
+        data = data[:2] + [changeHeight] + data[2 + 1:]
+    elif toChange == "Age":
+      changeAge = int(input("What is your current age? "))
+      areYouSure = input("Are you sure? (y/n) ")
+      if areYouSure == "n":
+        giveInfo()
+      else:
+        #replace age to updated age using slicing
+        data = data[:3] + [changeAge] + data[3 + 1:]
+    elif toChange == "Management":
+      print("What would you like to change your management to? ")
+      print("Bulk, Cut, Maintain")
+      changeManage = input("Choice: ")
+      areYouSure = input("Are you sure? (y/n) ")
+      if areYouSure == "n":
+        giveInfo()
+      else:
+        #replace management to new management using slicing
+        data = data[:5] + [changeManage] + data[5 + 1:]
+      
+  else:
+    x = 0
+    while x <= 20:
+      print("")
+      x += 1
+    raiseAll(mainMenu, "nothing")
+  x = 0
+  while x <= 20:
+    print("")
+    x += 1
+
+  '''
 #raise the quetions window to collect needed information
 def qRaise():
   raiseAll(questionsWindow, "nothing")
-  
-#raise the BMI menu
-def bmiRaise():
-  raiseAll(bmiMenu, "nothing")
-  
-#raise the main menu, this will be the core app
-def mainRaise():
-  raiseAll(mainMenu, "nothing")
-#raise the meditation/prayer tab
-def prayerRaise():
-  global day
-  if day == 1:
-    print("Prayer/meditaion for day 1:")
-    #https://connectusfund.org/10-strong-prayers-for-good-health
-    print(meditation[day])
-    print("")
-    print("")
-  elif day == 2:
-    print("Prayer/meditaion for day 2:")
-    #https://connectusfund.org/10-strong-prayers-for-good-health
-    print(meditation[day])
-    print("")
-    print("")
-
-  else:
-    print("ERROR")
 
 #raise the info tab to show user all submitted information
 def giveInfo():
@@ -159,10 +218,6 @@ def tempTextW(x):
   entNameQuestion.delete(0, "end")
 def tempTextDOB(x):
   entDOBQuestion.delete(0, "end")
-def tempTextA(x):
-  entAgeQuestion.delete(0, "end")
-def tempTextL(x):
-  entLocQuestion.delete(0, "end")
 def tempTextR(x):
   entReaQuestion.delete(0, "end")
 
@@ -228,22 +283,6 @@ entDOBQuestion.insert(0, "Enter in 00/00/0000 format")
 entDOBQuestion.pack()
 entDOBQuestion.bind("<FocusIn>", tempTextDOB)
 
-#Ask user their age efin 2
-ageQuestion = tk.Label(questionsWindow, text = "Enter your age below")
-ageQuestion.pack()
-entAgeQuestion = tk.Entry(questionsWindow, bd = 3)
-entAgeQuestion.insert(0, "Enter current age")
-entAgeQuestion.pack()
-entAgeQuestion.bind("<FocusIn>", tempTextA)
-
-#Ask the user their location efin 3
-locQuestion = tk.Label(questionsWindow, text = "Enter your location")
-locQuestion.pack()
-entLocQuestion = tk.Entry(questionsWindow, bd = 3)
-entLocQuestion.insert(0, "Enter your street address")
-entLocQuestion.pack()
-entLocQuestion.bind("<FocusIn>", tempTextL)
-
 #Ask the user their current reasources efin 4
 reaQuestion = tk.Label(questionsWindow, text = "Enter your current reasources")
 reaQuestion.pack()
@@ -258,8 +297,6 @@ save.pack()
 
 
 #choosing where person lives
-
-
 
 chooseCounty = tk.Frame(root)
 chooseCounty.grid(row = 0, column = 0, stick = 'news')
@@ -276,12 +313,12 @@ dropDownCountry.grid(row = 1, column = 2)
 
 choiceState = tk.StringVar()
 choiceState.set("Indiana")
-dropDownState = tk.OptionMenu(chooseCounty, choiceState, "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming")
+dropDownState = tk.OptionMenu(chooseCounty, choiceState, "Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi")
 dropDownState.grid(row = 2, column = 2)
 
 choiceCounty = tk.StringVar()
 choiceCounty.set("Allen")
-dropDownCounty = tk.OptionMenu(chooseCounty, choiceCounty, "Adams","Allen","Barthoomew","Benton","Blackford","Boone","Brown","Carroll","Cass","Clark","Clay","Clinton","Crawford","Daviess","De Kalb","Dearborn","Decatur","Delaware","Dubois","Elkhart","Fayette","Floyd","Fountain","Franklin","Fulton","Gibson","Grant","Greene","Hamilton","Hancock","Harrison","Hendricks","Henry","Howard","Huntington","Jackson","Jasper","Jay","Jefferson","Jennings","Johnson","Knox","Koscuisko","Lagrange","Lake","LaPorte","Lawrence","Madison","Marion","Marshall","Martin","Miami","Monroe","Montgomery","Morgan","Newton","Noble","Ohio","Orange","Owen","Parke","Perry","Pike","Porter","Posey","Pulaski","Putnam","Randolph","Ripley","Rush","Saint Joseph","Scott","Shelby","Spencer","Starke","Steuben","Sullivan","Switzerland","Tippeconoe","Tipton","Union","Vanderburgh","Vermillion","Vigo","Wabash","Warren","Warrick","Washington","Wayne","Wells","White","Whitley")
+dropDownCounty = tk.OptionMenu(chooseCounty, choiceCounty, "Adams","Allen","Barthoomew","Benton","Blackford","Boone","Brown","Carroll","Cass","Clark","Clay","Clinton","Crawford","Daviess")
 dropDownCounty.grid(row = 3, column = 2)
 
 enterLoc = tk.Button(chooseCounty, text = "Confirm", command = raiseMain)
@@ -291,6 +328,20 @@ enterLoc.grid(row = 4, column = 2)
 mainApp = tk.Frame(root)
 mainApp.grid(row = 0, column = 0, stick = 'news')
 
+#empty labels to push post and find over
+#row 1, column < 5
+KillMartin = tk.Label(mainApp, text = "                ")
+KillMartin.grid(row = 1, column = 1)
+KidnapFamily = tk.Label(mainApp, text = "                  ")
+KidnapFamily.grid(row = 1, column = 2)
+BuyVan = tk.Label(mainApp, text = "                       ")
+BuyVan.grid(row = 1, column = 3)
+RunVanOffHighway = tk.Label(mainApp, text = "                              ")
+RunVanOffHighway.grid(row = 1, column = 4)
+LightVanOnFire = tk.Label(mainApp, text = "                                     ")
+LightVanOnFire.grid(row = 1, column = 5)
+
+
 #give user the choice to see their BMI
 post = tk.Button(mainApp, text = "Post", command = goPosting)
 post.grid(row = 1, column = 5)
@@ -298,6 +349,28 @@ post.grid(row = 1, column = 5)
   
 postingFrame = tk.Frame(root)
 postingFrame.grid(row = 0, column = 0, stick = 'news')
+
+
+typeResource = tk.Label(postingFrame, text = "Type")
+typeResource.grid(row = 4, column = 5)
+
+entTypeResource = tk.Entry(postingFrame)
+entTypeResource.grid(row = 5, column = 5)
+
+locResource = tk.Label(postingFrame, text = "Location")
+locResource.grid(row = 6, column = 5)
+
+entLocResource = tk.Entry(postingFrame)
+entLocResource.grid(row = 7, column = 5)
+
+exResource = tk.Label(postingFrame, text = "When does it expire")
+exResource.grid(row = 8, column = 5)
+
+entExResource = tk.Entry(postingFrame)
+entExResource.grid(row = 9, column = 5)
+
+postButton = tk.Button(postingFrame, text = "Post!", command = postNew)
+postButton.grid(row = 10, column = 5)
 
 #x button so user can go back
 xButton = tk.Button(postingFrame, text = "x", command = goBack)
@@ -311,238 +384,17 @@ find.grid(row = 1, column = 6)
 findingFrame = tk.Frame(root)
 findingFrame.grid(row = 0, column = 0, stick = 'news')
 
+#when button is clicked pull up a splash screen as a loading screen
+
+#then after a certain amount of time show the user found results. 
+
+
+
 #x button so user can go back
 xButton = tk.Button(findingFrame, text = "x", command = goBack)
 xButton.grid(row = 1, column = 1)
 
 
-#show user thier information 
-#ethan will cover this
-
-
-'''
-########################################
-#Left off on making the main app
-######################################
-#give user options on their weight management
-weightchoose = tk.Label(bmiMenu, text = "vvv |Choose your weight management| vvv", font = "Arial")
-weightchoose.grid(row = 3, column = 3)
-#add bulking option, store the data to be used later in the code
-btnBulk = tk.Button(bmiMenu, text = "Bulk", command = choseBulk)
-btnBulk.grid(row = 5, column = 2)
-#explain what bulking is incase user does not know
-explBulk = tk.Label(bmiMenu, text = "Bulking is gaining weight")
-explBulk.grid(row = 6, column = 2)
-#add maintaining option, store the data to be used later in the code
-btnMaintain = tk.Button(bmiMenu, text = "Maintain", command = choseMaintain)
-btnMaintain.grid(row = 5, column = 3)
-#explain what maintaining is incase user does not know
-explMaintain = tk.Label(bmiMenu, text = "Maintaining is keeping weight")
-explMaintain.grid(row = 6, column = 3)
-#add cutting option, store the data to be used later in the code
-btnCut = tk.Button(bmiMenu, text = "Cut", command = choseCut)
-btnCut.grid(row = 5, column = 4)
-#explain what Cutting is incase user does not know
-explCut = tk.Label(bmiMenu, text = "Cutting is losing weight")
-explCut.grid(row = 6, column = 4)
-
-
-#Show user their information
-discloserMessage = tk.Button(bmiMenu, text = "Discloser", command = disclosure)
-discloserMessage.grid(row = 10, column = 3)
-
-#give user option to change their information
-
-
-
-
-#The "mainMenu" will be the main part of the app, all of the information collection was collected in the beginning of the app, we can now use the information collected and stored in "data"
-
-mainMenu = tk.Frame(root)
-mainMenu.grid(row = 0, column = 0, stick = 'news')
-
-
-#exersizes button/choice
-
-#attaching an image to a variable to be used in the code
-
-#image found at https://youtu.be/I9uVg-feZoM
-exersizeImg = (Image.open("pictures/icons/exersize.png"))
-#resizing the image so that it fits with the other images
-resizeExersizeImg = exersizeImg.resize((150, 150), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-exersizeImg = ImageTk.PhotoImage(resizeExersizeImg)
-#display the image using a label 
-showImg = tk.Label(mainMenu, image = exersizeImg)
-showImg.grid(row = 2, column = 2)
-
-#add a button so the user can see their daily exersize
-btnExersize = tk.Button(mainMenu, text = "Exercises", command = exersizeRaise)
-btnExersize.grid(row = 3, column = 2)
-
-
-#diet button/choice
-
-#attaching an image to a variable to be used in the code
-#image found at https://upload.wikimedia.org/wikipedia/commons/7/73/Apple_clipart.png
-dietImg = (Image.open("pictures/icons/Apple.png"))
-#resizing the image so that it fits with the other images
-resizeDietImg = dietImg.resize((150, 150), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-dietImg = ImageTk.PhotoImage(resizeDietImg)
-#display the image using a label
-showImg = tk.Label(mainMenu, image = dietImg)
-showImg.grid(row = 2, column = 7)
-
-#add a button so the user can see their diet
-btnDiet = tk.Button(mainMenu, text = "Diet", command = dietRaise)
-btnDiet.grid(row = 3, column = 7)
-
-
-
-#prayer/meditation button/choice
-#attaching an image to a variable to be used in the code
-#image found at https://static.thenounproject.com/png/51613-200.png
-meditationImg = (Image.open("pictures/icons/meditation.png"))
-#resizing the image so that it fits with the other images
-resizeMeditationImg = meditationImg.resize((150, 150), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-meditationImg = ImageTk.PhotoImage(resizeMeditationImg)
-#display the image using a label
-showImg = tk.Label(mainMenu, image = meditationImg)
-showImg.grid(row = 2, column = 10)
-
-#add a button so the user can see their daily meditation
-btnMeditation = tk.Button(mainMenu, text = "Meditation", command = prayerRaise)
-btnMeditation.grid(row = 3, column = 10)
-
-#info button will show user their collected info and give them the option to update it
-btnInfo = tk.Button(mainMenu, text = "I", command = giveInfo)
-btnInfo.grid(row = 1, column = 1)
-
-#exersize frame that will show user their exersizes based on what choice of management they had
-
-#exersizes for bulking
-
-exersizeBulk = tk.Frame(root)
-exersizeBulk.grid(row = 0, column = 0, sticky = 'news')
-
-
-#X button to go back to the main menu
-returnMain = tk.Button(exersizeBulk, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-#exersizes for maintaining
-exersizeMaintain = tk.Frame(root)
-exersizeMaintain.grid(row = 0, column = 0, sticky = 'news')
-
-#1st exersize
-
-#attaching an image to a variable to be used in the code
-
-#image found at https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsQl1GHC_jYi792PjFGFryM6OGUthVGCbdljHokDJVNL0smFDETTEL_k-bPS0nH5Jd7wQ&usqp=CAU
-exersizeExampleImg = (Image.open("pictures/exersizePictures/pushup.png"))
-#resizing the image so that it fits with the other images
-resizeExersizeExampleImg = exersizeExampleImg.resize((150, 150), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-exersizeExampleImg = ImageTk.PhotoImage(resizeExersizeExampleImg)
-#display the image using a label 
-showImg = tk.Label(exersizeMaintain, image = exersizeExampleImg)
-showImg.grid(row = 3, column = 2)
-
-#tell user how many sets x reps to do 
-howMany = tk.Label(exersizeMaintain, text = "8 - 12 reps, pushups | if too hard do use knees")
-howMany.grid(row = 4, column = 2)
-
-#tell user the exersize name
-exersizeName = tk.Label(exersizeMaintain, text = "Push-ups")
-exersizeName.grid(row = 2, column = 2)
-
-
-#2nd exersize
-
-#attaching an image to a variable to be used in the code
-#image found at https://cdn.iconscout.com/icon/premium/png-256-thumb/pull-up-1481035-1253869.png
-exersizeExampleImg2 = (Image.open("pictures/exersizePictures/pullup.png"))
-#resizing the image so that it fits with the other images
-resizeExersizeExampleImg2 = exersizeExampleImg2.resize((150, 150), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-exersizeExampleImg2 = ImageTk.PhotoImage(resizeExersizeExampleImg2)
-#display the image using a label
-showImg = tk.Label(exersizeMaintain, image = exersizeExampleImg2 )
-showImg.grid(row = 3, column = 5)
-
-#tell user how many sets x reps to do 
-howMany = tk.Label(exersizeMaintain, text = "2x 8 - 12 reps")
-howMany.grid(row = 4, column = 5)
-
-#tell user the exersize name
-exersizeName = tk.Label(exersizeMaintain, text = "Pull-ups")
-exersizeName.grid(row = 2, column = 5)
-
-#X button to go back to the main menu
-returnMain = tk.Button(exersizeMaintain, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-#exersizes for cutting
-exersizeCut = tk.Frame(root)
-exersizeCut.grid(row = 0, column = 0, sticky = 'news')
-
-
-#X button to go back to the main menu
-returnMain = tk.Button(exersizeCut, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-
-
-#diet will show their diet based on what management they have
-
-#diet for bulking
-dietBulk = tk.Frame(root)
-dietBulk.grid(row = 0, column = 0, sticky = 'news')
-
-
-#X button to go back to the main menu
-returnMain = tk.Button(dietBulk, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-#diet for maintaining
-dietMaintain = tk.Frame(root)
-dietMaintain.grid(row = 0, column = 0, sticky = 'news')
-#attaching an image to a variable to be used in the code
-#image found at 
-goodDiet = (Image.open("pictures/exersizePictures/fullmeal.jpg"))
-#resizing the image so that it fits with the other images
-resizeGoodDiet = goodDiet.resize((450, 350), Image.ANTIALIAS)
-#assigning the resized image to the originial variable
-goodDiet = ImageTk.PhotoImage(resizeGoodDiet)
-
-#display the image using a label
-showImg = tk.Label(dietMaintain, image = goodDiet)
-showImg.grid(row = 2, column = 4)
-
-#additional info button so user can learn why it's healthy
-more = tk.Button(dietMaintain, text = "MORE", command = showInfo)
-more.grid(row = 2, column = 5)
-#X button to go back to the main menu
-returnMain = tk.Button(dietMaintain, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-
-#diet for cutting
-dietCut = tk.Frame(root)
-dietCut.grid(row = 0, column = 0, sticky = 'news')
-
-
-
-
-
-
-#X button to go back to the main menu
-returnMain = tk.Button(dietCut, text = "X", command = goBack)
-returnMain.grid(row = 1, column = 1)
-
-'''
 
 
 
