@@ -30,7 +30,7 @@ data = [0, 1, 2, 3, 4]
 #raise frame functions
 
 #raise the loading window and save the name, a functions calling 2 functions so it works with tk
-
+awesome = ""
 #
 def saveAndRaise():
   saveInfo()
@@ -68,77 +68,6 @@ def saveInfo():
 def qRaise():
   raiseAll(questionsWindow, "nothing")
 
-#raise the info tab to show user all submitted information
-def giveInfo():
-  global data
-  print("Name: ", data[0])
-  print("Weight: ", data[1])
-  print("Height: ", data[2])
-  print("Age: ", data[3])
-  print("Management: ", data[5])
-  print("")
-  change = input("Would you like to change anything? (y/n) ")
-
-  if change == "y":
-    print("You can change the following: ")
-    print("Name, Weight, Height, Age, Management ")
-    toChange = input("What are we changing? ")
-    if toChange == "Name":
-      changeName = input("What would you like to change it to? ")
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace name to new name using slicing
-        data = data[:0] + [changeName] + data[0+1:]
-
-    elif toChange == "Weight":
-      changeWeight = float(input("What is your current weight now? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace weight to updated weight using slicing
-        data = data[:1] + [changeWeight] + data[1 + 1:]
-    elif toChange == "Height":
-      changeHeight = float(input("What is your current height? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace height to updated height using slicing
-        data = data[:2] + [changeHeight] + data[2 + 1:]
-    elif toChange == "Age":
-      changeAge = int(input("What is your current age? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace age to updated age using slicing
-        data = data[:3] + [changeAge] + data[3 + 1:]
-    elif toChange == "Management":
-      print("What would you like to change your management to? ")
-      print("Bulk, Cut, Maintain")
-      changeManage = input("Choice: ")
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace management to new management using slicing
-        data = data[:5] + [changeManage] + data[5 + 1:]
-      
-  else:
-    x = 0
-    while x <= 20:
-      print("")
-      x += 1
-    raiseAll(mainMenu, "nothing")
-  x = 0
-  while x <= 20:
-    print("")
-    x += 1
-
-  
 
 #instead of typing the same thing over and over again using a procedure to raise the frames would be easier 
 def raiseAll(raisingFrame, frameRaisingFrameInFront):
@@ -162,7 +91,11 @@ def questionsRaise():
 def raiseMain():
   raiseAll(mainApp, "nothing")
 def goPosting():
+  global awesome
   raiseAll(postingFrame, "nothing")
+  doThis.destroy()
+  awesome = tk.Label(mainApp, text = "Good Job! Now homeless people are helped!")
+  awesome.grid(row = 2, column = 1)
 #go back to main app
 def goBack():
   raiseAll(mainApp, "nothing")
@@ -171,7 +104,7 @@ def goFind():
   raiseAll(findingFrame, "nothing")
 # main window
 root = tk.Tk()
-root.wm_geometry("2960x1440")
+root.wm_geometry("1600x2960")
 root.winfo_toplevel().title("BlueDoor")
 menuWindow = tk.Frame(root)
 menuWindow.grid(row = 0, column = 0, stick = 'news')
@@ -264,21 +197,21 @@ enterLoc.grid(row = 4, column = 2)
 mainApp = tk.Frame(root)
 mainApp.grid(row = 0, column = 0, stick = 'news')
 
+welcome = tk.Label(mainApp, text = "Welcome to the BlueDoor Main Page, here you can find avaliable resources for your needs!")
+welcome.grid(row = 1, column = 1)
+
+doThis = tk.Label(mainApp, text = "It seems that there are no posts right now, make a post to help the needy")
+doThis.grid(row = 2, column = 1)
+
 
 newPost = tk.Label(mainApp, text = "")
-newPost.grid(row = postNumber, column = 5)
+newPost.grid(row = postNumber + 1, column = 4)
 
-
-#empty labels to push post and find over
-#row 1, column < 5
-KillMartin = tk.Label(mainApp, text = "            ")
-KillMartin.grid(row = 1, column = 1)
-KidnapFamily = tk.Label(mainApp, text = "                  ")
-KidnapFamily.grid(row = 1, column = 2)
-BuyVan = tk.Label(mainApp, text = "                       ")
-BuyVan.grid(row = 1, column = 3)
-RunVanOffHighway = tk.Label(mainApp, text = "                                       ")
-RunVanOffHighway.grid(row = 1, column = 4)
+def destroyPost():
+  global awesome
+  newPost.config(text = " ")
+  awesome.destroy()
+  raiseAll(mainApp, "nothing")
 
 
 #give user the choice to see their BMI
@@ -311,6 +244,8 @@ entExResource.grid(row = 9, column = 5)
 postButton = tk.Button(postingFrame, text = "Post!", command = postNew)
 postButton.grid(row = 10, column = 5)
 
+delPost = tk.Button(postingFrame, text = "Delete Past Post", command = destroyPost)
+delPost.grid(row = 10, column = 6)
 #x button so user can go back
 xButton = tk.Button(postingFrame, text = "x", command = goBack)
 xButton.grid(row = 1, column = 1)
