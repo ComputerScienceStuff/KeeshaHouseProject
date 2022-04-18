@@ -6,12 +6,11 @@
 #Imports
 #we will be using tk as the base for UI
 import tkinter as tk
-
 from PIL import ImageTk, Image
 
 
 #data storage
-posts = [0, 1, 2]
+posts = []
 '''
 0 = Type
 1 = Location
@@ -37,17 +36,24 @@ def saveAndRaise():
   saveInfo()
   raiseAll(chooseCounty, "nothing")
 
+postNumber = 2
 
-
+type = ""
+location = ""
+expiration = ""
 def postNew():
+  global type, location, expiration, postNumber
   #get all info inputted and add it to a list to save
   type = entTypeResource.get()
-  data[:0] + [type] + data[0 + 1:]
   location = entLocResource.get()
-  data[:1] + [location] + data[1+ 1:]
   expiration = entExResource.get()
-  data[:2] + [expiration] + data[2 + 1:]
-  
+
+  allVars = "Type: " + type + "\n Location: " + location + "\n Expiration: " + expiration
+  newPost.config(text = allVars)
+  postNumber += 1
+  raiseMain()
+
+
 def saveInfo():
   #appending saved data
   global data
@@ -57,78 +63,7 @@ def saveInfo():
   data[:1] + [userDOB] + data[1 + 1:]
   userRea = entReaQuestion.get()
   data[:2] + [userRea] + data[2 + 1:]
-
-  '''
-  def giveInfo():
-  global data
-  print("Name: ", data[0])
-  print("Weight: ", data[1])
-  print("Height: ", data[2])
-  print("Age: ", data[3])
-  print("Management: ", data[5])
-  print("")
-  change = input("Would you like to change anything? (y/n) ")
-
-  if change == "y":
-    print("You can change the following: ")
-    print("Name, Weight, Height, Age, Management ")
-    toChange = input("What are we changing? ")
-    if toChange == "Name":
-      changeName = input("What would you like to change it to? ")
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace name to new name using slicing
-        data = data[:0] + [changeName] + data[0+1:]
-
-    elif toChange == "Weight":
-      changeWeight = float(input("What is your current weight now? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace weight to updated weight using slicing
-        data = data[:1] + [changeWeight] + data[1 + 1:]
-    elif toChange == "Height":
-      changeHeight = float(input("What is your current height? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace height to updated height using slicing
-        data = data[:2] + [changeHeight] + data[2 + 1:]
-    elif toChange == "Age":
-      changeAge = int(input("What is your current age? "))
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace age to updated age using slicing
-        data = data[:3] + [changeAge] + data[3 + 1:]
-    elif toChange == "Management":
-      print("What would you like to change your management to? ")
-      print("Bulk, Cut, Maintain")
-      changeManage = input("Choice: ")
-      areYouSure = input("Are you sure? (y/n) ")
-      if areYouSure == "n":
-        giveInfo()
-      else:
-        #replace management to new management using slicing
-        data = data[:5] + [changeManage] + data[5 + 1:]
-      
-  else:
-    x = 0
-    while x <= 20:
-      print("")
-      x += 1
-    raiseAll(mainMenu, "nothing")
-  x = 0
-  while x <= 20:
-    print("")
-    x += 1
-
-  '''
+  
 #raise the quetions window to collect needed information
 def qRaise():
   raiseAll(questionsWindow, "nothing")
@@ -324,9 +259,15 @@ dropDownCounty.grid(row = 3, column = 2)
 enterLoc = tk.Button(chooseCounty, text = "Confirm", command = raiseMain)
 enterLoc.grid(row = 4, column = 2)
 
+
 #Go to main app
 mainApp = tk.Frame(root)
 mainApp.grid(row = 0, column = 0, stick = 'news')
+
+
+newPost = tk.Label(mainApp, text = "")
+newPost.grid(row = postNumber, column = 5)
+
 
 #empty labels to push post and find over
 #row 1, column < 5
@@ -384,20 +325,19 @@ findingFrame.grid(row = 0, column = 0, stick = 'news')
 
 #when button is clicked pull up a splash screen as a loading screen
 
-#then after a certain amount of time show the user found results. 
+
+loadingScreen = tk.Label(findingFrame, text = "Loading avaliable resources")
+loadingScreen.grid(row = 5, column = 5)
 
 
+goBackToMain = tk.Button(findingFrame, text = "Load!", command = raiseMain)
+goBackToMain.grid(row = 6, column = 5)
 
 #x button so user can go back
 xButton = tk.Button(findingFrame, text = "x", command = goBack)
 xButton.grid(row = 1, column = 1)
 
 
-
-
-
 #raising frames so it renders right
-
 raiseAll(menuWindow, "nothing")
-
 root.mainloop()
